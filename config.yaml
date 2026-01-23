@@ -1,0 +1,40 @@
+llm:
+  default_model: "gpt-4o"
+  models:
+    - name: "gpt-4o"
+      alias: "gpt4o"
+    - name: "gpt-4o-mini"
+      alias: "gpt4o-mini"
+    - name: "chatgpt-4o-latest"
+      alias: "chatgpt"
+    - name: "o4-mini"
+      alias: "o4-mini"
+    - name: "gpt-5.2"
+      alias: "gpt5"
+    - name: "claude-opus-4.5"
+      alias: "claude-opus"
+
+prompt:
+  system: |
+    You are an expert algorithm tutor and competitive programmer. Your solutions should be:
+    1. Direct and to the point
+    2. Heavily commented explaining each step and the reasoning
+    3. Include time and space complexity analysis
+    4. Explain the key insights and patterns used
+
+  template: |
+    ## Problem Description
+    {problem_description}
+
+    {reference_section}
+
+    ## Your Task
+    Please provide:
+    1. **Intuition**: Explain the key insight or pattern that makes this problem solvable
+    2. **Approach**: Step-by-step pseudocode of the solution
+    3. **Python Solution**: A clean, heavily-commented Python implementation
+    4. **Complexity Analysis**: Time and space complexity with explanation
+    5. **Alternative Approaches**: Briefly mention other ways to solve this (if any)
+
+reference_directories:
+  - /Users/hafizahsan/projects/github/hafiz-ahsan/grind75
