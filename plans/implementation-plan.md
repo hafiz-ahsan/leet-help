@@ -306,7 +306,7 @@ uv run leet-help anki --csv grind75_problems.csv --format text --output grind75.
 
 ## Package Configuration
 
-### Upated `pyproject.toml`
+### Updated `pyproject.toml`
 ```toml
 [project]
 name = "leet-help"
