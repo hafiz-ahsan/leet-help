@@ -132,35 +132,11 @@ Every solution file begins with a standard header:
 ---
 ```
 
-## Configuration
-
-### config.yaml
-
-```yaml
-reference_directories:
-  - /path/to/existing/solutions   # optional: used by the skill to find reference implementations
-```
-
-Model definitions (used by the skill to label output files):
-
-```yaml
-llm:
-  default_model: "claude-opus"
-  models:
-    - name: "claude-opus-4.8"
-      alias: "claude-opus"
-      backend: "claude"
-    - name: "gpt-5"
-      alias: "gpt5"
-      backend: "codex"
-```
-
 ## Project Structure
 
 ```
 leet-help/
 ├── pyproject.toml                   # Package configuration
-├── config.yaml                      # Model configuration
 ├── problem-index.csv                # 75 Grind 75 problems with categories
 ├── problem-index-solutions.pdf      # Combined PDF workbook (all 75 problems)
 ├── src/leet_help/
