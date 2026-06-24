@@ -1,5 +1,5 @@
 ---
-name: generate-pdf
+name: generate-leethelp-pdf
 description: Generate solutions.pdf for one or more problems, and regenerate all-solutions.pdf. Use when the user asks to generate, regenerate, rebuild, or export PDFs.
 version: 1.0.0
 ---

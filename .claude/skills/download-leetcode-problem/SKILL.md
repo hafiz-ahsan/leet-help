@@ -1,60 +1,77 @@
 ---
 name: download-leetcode-problem
-description: Download LeetCode problem statements and save them as problem.md files. Use when the user asks to download, fetch, or pull one or more problems from LeetCode.
-version: 1.0.0
+description: Download a LeetCode problem statement, update problem-index.csv with its metadata, and save it as problem.md. Use when the user asks to download, fetch, or pull one or more problems from LeetCode.
+version: 2.0.0
 ---
 
 # Download LeetCode Problems
 
-Use the `leet-help download` CLI command to fetch problem statements from LeetCode via Playwright/Chromium and save them as `problems/{Number}-{slug}/problem.md`.
+Given one or more problem numbers, fetch their metadata from LeetCode, update `problem-index.csv`, then download the problem statement via the CLI.
 
-## Step 1 — Determine scope
+## Step 1 — Fetch metadata from LeetCode
 
-Parse the user's request. At least one problem number is required — the command will error without `-p`.
-
-- Specific problem numbers: e.g. "download 1 and 3" → use `-p 1 -p 3`
-- If the user says "all problems", ask them to confirm or list the numbers — downloading all 75 at once is slow and hits LeetCode repeatedly.
-- Already-downloaded problems are skipped by default. Add `--force` only if the user explicitly wants to re-download.
-
-## Step 2 — Run the download command
+For each problem number, query the LeetCode API to get the title, slug, difficulty, and acceptance rate:
 
 ```bash
-uv run leet-help download [options]
+curl -s 'https://leetcode.com/api/problems/all/' | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+p = next((x for x in data['stat_status_pairs'] if x['stat']['frontend_question_id'] == {NUMBER}), None)
+if not p:
+    print('NOT FOUND')
+    sys.exit(1)
+difficulty = {1: 'Easy', 2: 'Medium', 3: 'Hard'}[p['difficulty']['level']]
+total = p['stat']['total_submitted']
+acs = p['stat']['total_acs']
+acceptance = f'{acs/total*100:.1f}%' if total else 'N/A'
+slug = p['stat']['question__title_slug']
+print(json.dumps({
+    'number': p['stat']['frontend_question_id'],
+    'title': p['stat']['question__title'],
+    'slug': slug,
+    'difficulty': difficulty,
+    'acceptance': acceptance,
+    'url': f'https://leetcode.com/problems/{slug}/'
+}))
+"
 ```
 
-`problem-index.csv` is the default — no `--csv` needed unless using a different file.
+## Step 2 — Infer the category
 
-### Common invocations
+Using the problem title, difficulty, and your knowledge of LeetCode problems, infer the most appropriate category. Use one of these standard categories where possible:
 
-Download specific problems (skips already-downloaded ones by default):
+`Array`, `String`, `Hash Table`, `Linked List`, `Stack`, `Queue`, `Tree`, `Binary Tree`, `Binary Search`, `Graph`, `Dynamic Programming`, `Backtracking`, `Greedy`, `Heap`, `Trie`, `Sliding Window`, `Two Pointers`, `Math`, `Bit Manipulation`, `Design`
+
+Pick the single best-fit category. If uncertain, choose the most prominent data structure or algorithm pattern the problem is known for.
+
+## Step 3 — Update problem-index.csv
+
+Read `problem-index.csv`. The columns are: `Number,Title,Difficulty,Acceptance,Category,URL`
+
+- If the problem number already exists in the CSV, update its row.
+- If it does not exist, append a new row in ascending order by Number.
+
+Write the updated CSV back to disk.
+
+## Step 4 — Download the problem statement
+
+Now that the problem is in the CSV, call the CLI:
+
 ```bash
-uv run leet-help download -p 1 -p 3
+uv run leet-help download -p {NUMBER}
 ```
 
-Force re-download even if problem.md exists:
-```bash
-uv run leet-help download -p 1 -p 3 --force
-```
+This opens a browser, navigates to the problem page, and saves the content to `problems/{Number}-{slug}/problem.md`. Already-downloaded problems are skipped unless `--force` is passed.
 
-### All options
+## Step 5 — Confirm
 
-| Option | Default | Description |
-|---|---|---|
-| `--csv` | `problem-index.csv` | Path to problem index CSV |
-| `-p` / `--problems` | required | Specific problem numbers; repeat for multiple |
-| `-o` / `--output` | `problems/` | Output directory |
-| `--force` | false | Re-download even if `problem.md` already exists |
-| `--delay` | 2.0s | Delay between downloads (be polite to LeetCode) |
-
-## Step 3 — Confirm
-
-After the command completes, report:
-- How many problems were downloaded
-- Which problem directories were created or updated (e.g. `problems/1-two-sum/problem.md`)
-- Any that were skipped (if `--skip-existing` was used)
+Report for each problem:
+- ✅ Downloaded — `problems/{Number}-{slug}/problem.md` created
+- ⏭️ Skipped — already existed
+- ❌ Failed — note the error
 
 ## Notes
 
-- Requires Playwright/Chromium: run `uv run playwright install chromium` if it has not been installed yet.
-- LeetCode may require a login for premium problems. The downloader opens a real browser window; log in manually if prompted.
-- The default 2-second delay between downloads avoids rate limiting. Do not set `--delay 0`.
+- The LeetCode API call in Step 1 returns all problems in one payload. Cache the result if downloading multiple problems in one session to avoid repeated large fetches.
+- The browser opened by the CLI is real (non-headless). If LeetCode shows a login wall, the user must log in manually.
+- Default delay between downloads is 2 seconds. Do not remove it.

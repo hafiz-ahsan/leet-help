@@ -42,7 +42,7 @@ Fetches metadata from the LeetCode API, infers category, updates `problem-index.
 When the user asks to generate, regenerate, rebuild, or export PDFs, follow:
 
 ```
-.claude/skills/generate-pdf/SKILL.md
+.claude/skills/generate-leethelp-pdf/SKILL.md
 ```
 
 Requires `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib` on macOS. Produces per-problem `solutions.pdf` files and the combined `all-solutions.pdf`.
@@ -77,7 +77,7 @@ problems/{N}-{slug}/solution-codex.md                   # Codex solution
 problems/{N}-{slug}/solutions.pdf                       # Per-problem PDF
 .claude/skills/solve-leetcode-problem/SKILL.md          # Solve skill
 .claude/skills/download-leetcode-problem/SKILL.md       # Download skill
-.claude/skills/generate-pdf/SKILL.md                    # PDF generation skill
+.claude/skills/generate-leethelp-pdf/SKILL.md            # PDF generation skill
 src/leet_help/server.py                                  # FastAPI web server
 templates/browser.html                                   # Web UI
 ```
