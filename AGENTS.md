@@ -1,23 +1,18 @@
 # Agent Instructions for leet-help
 
-## Solve LeetCode Problems
+## Skills
 
-When the user asks you to solve, regenerate, re-solve, update, or refresh solutions for one or more LeetCode problems, follow the instructions in:
+Each skill has a `SKILL.md` with full instructions. Read the relevant file before acting.
+
+### Solve LeetCode Problems
+
+When the user asks you to solve, regenerate, re-solve, update, or refresh solutions, follow:
 
 ```
 .claude/skills/solve-leetcode-problem/SKILL.md
 ```
 
-Read that file first, then execute its steps. The skill is written for any capable AI agent — it does not require the Claude Code CLI. As Codex, you write solutions to `solution-codex.md` inside each problem's directory.
-
-### Quick reference
-
-- Problem metadata: `problem-index.csv` (columns: `Number,Title,Difficulty,Acceptance,Category,URL`)
-- Problem statements: `problems/{Number}-{slug}/problem.md`
-- Your output: `problems/{Number}-{slug}/solution-codex.md`
-- Verification: `uv run python /tmp/verify_{Number}.py`
-
-### Example requests and what they mean
+As Codex, write solutions to `solution-codex.md` inside each problem's directory.
 
 | User says | Action |
 |---|---|
@@ -25,6 +20,23 @@ Read that file first, then execute its steps. The skill is written for any capab
 | "regenerate all Array problems" | Filter `problem-index.csv` by Category=Array, generate each |
 | "solve 1, 3, and 21" | Generate solutions for those three problem numbers |
 | "regenerate all Easy problems" | Filter by Difficulty=Easy |
+
+### Download LeetCode Problems
+
+When the user asks you to download, fetch, or pull problem statements, follow:
+
+```
+.claude/skills/download-leetcode-problem/SKILL.md
+```
+
+Uses `uv run leet-help download`. `problem-index.csv` is the default — no `--csv` needed.
+
+| User says | Action |
+|---|---|
+| "download problem 1" | `uv run leet-help download -p 1` |
+| "download problems 1, 3, and 21" | `uv run leet-help download -p 1 -p 3 -p 21` |
+| "download all problems" | `uv run leet-help download` |
+| "download only new problems" | `uv run leet-help download --skip-existing` |
 
 ## Project overview
 
