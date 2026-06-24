@@ -9,8 +9,6 @@ from pypdf import PdfWriter
 from pygments import highlight
 from pygments.lexers import PythonLexer, get_lexer_by_name
 from pygments.formatters import HtmlFormatter
-from weasyprint import HTML
-
 from .models import Problem
 
 
@@ -201,7 +199,8 @@ def generate_problem_pdf(
         codex_solution=codex_html,
     )
 
-    # Generate PDF
+    # Generate PDF (imported here so non-PDF commands don't require the weasyprint libs)
+    from weasyprint import HTML
     HTML(string=html_content).write_pdf(pdf_file)
 
     print(f"  Saved to {pdf_file}")
