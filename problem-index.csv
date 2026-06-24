@@ -10,6 +10,7 @@ Number,Title,Difficulty,Acceptance,Category,URL
 21,Merge Two Sorted Lists,Easy,67.8%,Linked List,https://leetcode.com/problems/merge-two-sorted-lists/
 23,Merge k Sorted Lists,Hard,58.6%,Heap,https://leetcode.com/problems/merge-k-sorted-lists/
 33,Search in Rotated Sorted Array,Medium,43.9%,Binary Search,https://leetcode.com/problems/search-in-rotated-sorted-array/
+37,Sudoku Solver,Hard,65.6%,Backtracking,https://leetcode.com/problems/sudoku-solver/
 39,Combination Sum,Medium,75.9%,Array,https://leetcode.com/problems/combination-sum/
 42,Trapping Rain Water,Hard,66.6%,Stack,https://leetcode.com/problems/trapping-rain-water/
 46,Permutations,Medium,81.5%,Recursion,https://leetcode.com/problems/permutations/
