@@ -114,7 +114,8 @@ def index(csv_path, problems_dir, output):
     "--csv",
     "csv_path",
     type=click.Path(exists=True, path_type=Path),
-    required=True,
+    default="problem-index.csv",
+    show_default=True,
     help="Path to CSV file containing problems",
 )
 @click.option(

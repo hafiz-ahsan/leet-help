@@ -39,6 +39,22 @@ At least one `-p` is required — the command errors without it.
 | "download problems 1, 3, and 21" | `uv run leet-help download -p 1 -p 3 -p 21` |
 | "re-download problem 1" | `uv run leet-help download -p 1 --force` |
 
+### Generate PDFs
+
+When the user asks to generate, regenerate, rebuild, or export PDFs, follow:
+
+```
+.claude/skills/generate-pdf/SKILL.md
+```
+
+Requires `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib` on macOS. Produces per-problem `solutions.pdf` files and the combined `all-solutions.pdf`.
+
+| User says | Action |
+|---|---|
+| "generate PDF for problem 37" | `... leet-help pdf -p 37` |
+| "regenerate all PDFs" | `... leet-help pdf --force` |
+| "generate PDFs for all problems" | `... leet-help pdf` |
+
 ## Project overview
 
 `leet-help` is a CLI and web tool for LeetCode study. Key commands (all via `uv run leet-help`):
