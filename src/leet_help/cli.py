@@ -41,9 +41,9 @@ def main():
     help="Output directory for problems (default: problems/)",
 )
 @click.option(
-    "--skip-existing",
+    "--force",
     is_flag=True,
-    help="Skip problems that already have a problem.md file",
+    help="Re-download problems even if problem.md already exists",
 )
 @click.option(
     "--delay",
@@ -51,7 +51,7 @@ def main():
     default=2.0,
     help="Delay between downloads in seconds (default: 2.0)",
 )
-def download(csv_path, problems, output, skip_existing, delay):
+def download(csv_path, problems, output, force, delay):
     """Download LeetCode problems using a browser."""
     if not problems:
         raise click.UsageError("Specify at least one problem number with -p.")
@@ -69,7 +69,7 @@ def download(csv_path, problems, output, skip_existing, delay):
     download_problems(
         all_problems,
         output,
-        skip_existing=skip_existing,
+        skip_existing=not force,
         delay_between=delay,
     )
 

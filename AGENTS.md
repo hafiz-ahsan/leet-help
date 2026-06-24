@@ -37,7 +37,7 @@ At least one `-p` is required — the command errors without it.
 |---|---|
 | "download problem 1" | `uv run leet-help download -p 1` |
 | "download problems 1, 3, and 21" | `uv run leet-help download -p 1 -p 3 -p 21` |
-| "download problem 1, skip if exists" | `uv run leet-help download -p 1 --skip-existing` |
+| "re-download problem 1" | `uv run leet-help download -p 1 --force` |
 
 ## Project overview
 

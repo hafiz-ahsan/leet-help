@@ -14,7 +14,7 @@ Parse the user's request. At least one problem number is required — the comman
 
 - Specific problem numbers: e.g. "download 1 and 3" → use `-p 1 -p 3`
 - If the user says "all problems", ask them to confirm or list the numbers — downloading all 75 at once is slow and hits LeetCode repeatedly.
-- Skip already downloaded: if the user says "only new" or "skip existing" → add `--skip-existing`
+- Already-downloaded problems are skipped by default. Add `--force` only if the user explicitly wants to re-download.
 
 ## Step 2 — Run the download command
 
@@ -26,24 +26,24 @@ uv run leet-help download [options]
 
 ### Common invocations
 
-Download specific problems:
+Download specific problems (skips already-downloaded ones by default):
 ```bash
 uv run leet-help download -p 1 -p 3
 ```
 
-Download specific problems, skip if already present:
+Force re-download even if problem.md exists:
 ```bash
-uv run leet-help download -p 1 -p 3 --skip-existing
+uv run leet-help download -p 1 -p 3 --force
 ```
 
 ### All options
 
 | Option | Default | Description |
 |---|---|---|
-| `--csv` | required | Path to problem index CSV |
-| `-p` / `--problems` | (all) | Specific problem numbers; repeat for multiple |
+| `--csv` | `problem-index.csv` | Path to problem index CSV |
+| `-p` / `--problems` | required | Specific problem numbers; repeat for multiple |
 | `-o` / `--output` | `problems/` | Output directory |
-| `--skip-existing` | false | Skip problems that already have `problem.md` |
+| `--force` | false | Re-download even if `problem.md` already exists |
 | `--delay` | 2.0s | Delay between downloads (be polite to LeetCode) |
 
 ## Step 3 — Confirm
