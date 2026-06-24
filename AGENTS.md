@@ -31,12 +31,13 @@ When the user asks you to download, fetch, or pull problem statements, follow:
 
 Uses `uv run leet-help download`. `problem-index.csv` is the default — no `--csv` needed.
 
+At least one `-p` is required — the command errors without it.
+
 | User says | Action |
 |---|---|
 | "download problem 1" | `uv run leet-help download -p 1` |
 | "download problems 1, 3, and 21" | `uv run leet-help download -p 1 -p 3 -p 21` |
-| "download all problems" | `uv run leet-help download` |
-| "download only new problems" | `uv run leet-help download --skip-existing` |
+| "download problem 1, skip if exists" | `uv run leet-help download -p 1 --skip-existing` |
 
 ## Project overview
 

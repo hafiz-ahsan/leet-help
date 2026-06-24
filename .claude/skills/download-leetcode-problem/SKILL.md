@@ -10,10 +10,10 @@ Use the `leet-help download` CLI command to fetch problem statements from LeetCo
 
 ## Step 1 — Determine scope
 
-Parse the user's request:
+Parse the user's request. At least one problem number is required — the command will error without `-p`.
 
 - Specific problem numbers: e.g. "download 1 and 3" → use `-p 1 -p 3`
-- All problems: e.g. "download all problems" → use `--csv problem-index.csv` with no `-p` filter
+- If the user says "all problems", ask them to confirm or list the numbers — downloading all 75 at once is slow and hits LeetCode repeatedly.
 - Skip already downloaded: if the user says "only new" or "skip existing" → add `--skip-existing`
 
 ## Step 2 — Run the download command
@@ -31,14 +31,9 @@ Download specific problems:
 uv run leet-help download -p 1 -p 3
 ```
 
-Download all 75 problems (skip ones already present):
+Download specific problems, skip if already present:
 ```bash
-uv run leet-help download --skip-existing
-```
-
-Force re-download everything:
-```bash
-uv run leet-help download
+uv run leet-help download -p 1 -p 3 --skip-existing
 ```
 
 ### All options

@@ -53,14 +53,14 @@ def main():
 )
 def download(csv_path, problems, output, skip_existing, delay):
     """Download LeetCode problems using a browser."""
-    all_problems = load_problems_from_csv(csv_path)
+    if not problems:
+        raise click.UsageError("Specify at least one problem number with -p.")
 
-    # Filter by problem numbers if specified
-    if problems:
-        all_problems = filter_problems_by_numbers(all_problems, list(problems))
-        if not all_problems:
-            click.echo(f"No problems found matching numbers: {problems}")
-            return
+    all_problems = load_problems_from_csv(csv_path)
+    all_problems = filter_problems_by_numbers(all_problems, list(problems))
+    if not all_problems:
+        click.echo(f"No problems found matching numbers: {problems}")
+        return
 
     # Create output directory
     output.mkdir(parents=True, exist_ok=True)
