@@ -1,0 +1,76 @@
+Number,Title,Difficulty,Acceptance,Category,URL
+1,Two Sum,Easy,56.9%,Array,https://leetcode.com/problems/two-sum/
+3,Longest Substring Without Repeating Characters,Medium,38.3%,String,https://leetcode.com/problems/longest-substring-without-repeating-characters/
+5,Longest Palindromic Substring,Medium,37.1%,String,https://leetcode.com/problems/longest-palindromic-substring/
+8,String to Integer (atoi),Medium,20.4%,String,https://leetcode.com/problems/string-to-integer-atoi/
+11,Container With Most Water,Medium,59.3%,Array,https://leetcode.com/problems/container-with-most-water/
+15,3Sum,Medium,38.4%,Array,https://leetcode.com/problems/3sum/
+17,Letter Combinations of a Phone Number,Medium,65.3%,Recursion,https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+20,Valid Parentheses,Easy,43.5%,Stack,https://leetcode.com/problems/valid-parentheses/
+21,Merge Two Sorted Lists,Easy,67.8%,Linked List,https://leetcode.com/problems/merge-two-sorted-lists/
+23,Merge k Sorted Lists,Hard,58.6%,Heap,https://leetcode.com/problems/merge-k-sorted-lists/
+33,Search in Rotated Sorted Array,Medium,43.9%,Binary Search,https://leetcode.com/problems/search-in-rotated-sorted-array/
+39,Combination Sum,Medium,75.9%,Array,https://leetcode.com/problems/combination-sum/
+42,Trapping Rain Water,Hard,66.6%,Stack,https://leetcode.com/problems/trapping-rain-water/
+46,Permutations,Medium,81.5%,Recursion,https://leetcode.com/problems/permutations/
+53,Maximum Subarray,Medium,52.8%,Dynamic Programming,https://leetcode.com/problems/maximum-subarray/
+54,Spiral Matrix,Medium,55.9%,Matrix,https://leetcode.com/problems/spiral-matrix/
+56,Merge Intervals,Medium,50.9%,Array,https://leetcode.com/problems/merge-intervals/
+57,Insert Interval,Medium,44.6%,Array,https://leetcode.com/problems/insert-interval/
+62,Unique Paths,Medium,66.5%,Dynamic Programming,https://leetcode.com/problems/unique-paths/
+67,Add Binary,Easy,56.7%,Binary,https://leetcode.com/problems/add-binary/
+70,Climbing Stairs,Easy,53.9%,Dynamic Programming,https://leetcode.com/problems/climbing-stairs/
+75,Sort Colors,Medium,68.9%,Array,https://leetcode.com/problems/sort-colors/
+76,Minimum Window Substring,Hard,46.7%,String,https://leetcode.com/problems/minimum-window-substring/
+78,Subsets,Medium,81.9%,Recursion,https://leetcode.com/problems/subsets/
+79,Word Search,Medium,46.6%,Graph,https://leetcode.com/problems/word-search/
+84,Largest Rectangle in Histogram,Hard,49.1%,Stack,https://leetcode.com/problems/largest-rectangle-in-histogram/
+98,Validate Binary Search Tree,Medium,35.2%,Binary Search Tree,https://leetcode.com/problems/validate-binary-search-tree/
+102,Binary Tree Level Order Traversal,Medium,72.0%,Binary Tree,https://leetcode.com/problems/binary-tree-level-order-traversal/
+104,Maximum Depth of Binary Tree,Easy,77.8%,Binary Tree,https://leetcode.com/problems/maximum-depth-of-binary-tree/
+105,Construct Binary Tree from Preorder and Inorder Traversal,Medium,68.2%,Binary Tree,https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+110,Balanced Binary Tree,Easy,56.9%,Binary Tree,https://leetcode.com/problems/balanced-binary-tree/
+121,Best Time to Buy and Sell Stock,Easy,56.2%,Array,https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+125,Valid Palindrome,Easy,52.5%,String,https://leetcode.com/problems/valid-palindrome/
+127,Word Ladder,Hard,44.7%,Graph,https://leetcode.com/problems/word-ladder/
+133,Clone Graph,Medium,64.4%,Graph,https://leetcode.com/problems/clone-graph/
+139,Word Break,Medium,49.0%,Trie,https://leetcode.com/problems/word-break/
+141,Linked List Cycle,Easy,53.7%,Linked List,https://leetcode.com/problems/linked-list-cycle/
+146,LRU Cache,Medium,46.6%,Linked List,https://leetcode.com/problems/lru-cache/
+150,Evaluate Reverse Polish Notation,Medium,56.7%,Stack,https://leetcode.com/problems/evaluate-reverse-polish-notation/
+155,Min Stack,Medium,57.6%,Stack,https://leetcode.com/problems/min-stack/
+169,Majority Element,Easy,66.0%,Array,https://leetcode.com/problems/majority-element/
+199,Binary Tree Right Side View,Medium,69.2%,Binary Tree,https://leetcode.com/problems/binary-tree-right-side-view/
+200,Number of Islands,Medium,63.6%,Graph,https://leetcode.com/problems/number-of-islands/
+206,Reverse Linked List,Easy,80.1%,Linked List,https://leetcode.com/problems/reverse-linked-list/
+207,Course Schedule,Medium,50.6%,Graph,https://leetcode.com/problems/course-schedule/
+208,Implement Trie (Prefix Tree),Medium,69.0%,Trie,https://leetcode.com/problems/implement-trie-prefix-tree/
+217,Contains Duplicate,Easy,64.0%,Array,https://leetcode.com/problems/contains-duplicate/
+224,Basic Calculator,Hard,46.4%,Stack,https://leetcode.com/problems/basic-calculator/
+226,Invert Binary Tree,Easy,79.7%,Binary Tree,https://leetcode.com/problems/invert-binary-tree/
+230,Kth Smallest Element in a BST,Medium,76.3%,Binary Search Tree,https://leetcode.com/problems/kth-smallest-element-in-a-bst/
+232,Implement Queue using Stacks,Easy,69.1%,Stack,https://leetcode.com/problems/implement-queue-using-stacks/
+235,Lowest Common Ancestor of a Binary Search Tree,Medium,69.9%,Binary Search Tree,https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
+236,Lowest Common Ancestor of a Binary Tree,Medium,68.5%,Binary Tree,https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
+238,Product of Array Except Self,Medium,68.5%,Array,https://leetcode.com/problems/product-of-array-except-self/
+242,Valid Anagram,Easy,67.6%,String,https://leetcode.com/problems/valid-anagram/
+278,First Bad Version,Easy,46.7%,Binary Search,https://leetcode.com/problems/first-bad-version/
+295,Find Median from Data Stream,Hard,54.1%,Heap,https://leetcode.com/problems/find-median-from-data-stream/
+297,Serialize and Deserialize Binary Tree,Hard,60.2%,Binary Tree,https://leetcode.com/problems/serialize-and-deserialize-binary-tree/
+310,Minimum Height Trees,Medium,42.4%,Graph,https://leetcode.com/problems/minimum-height-trees/
+322,Coin Change,Medium,47.8%,Dynamic Programming,https://leetcode.com/problems/coin-change/
+383,Ransom Note,Easy,65.5%,Hash Table,https://leetcode.com/problems/ransom-note/
+409,Longest Palindrome,Easy,55.8%,String,https://leetcode.com/problems/longest-palindrome/
+416,Partition Equal Subset Sum,Medium,49.1%,Dynamic Programming,https://leetcode.com/problems/partition-equal-subset-sum/
+438,Find All Anagrams in a String,Medium,53.1%,String,https://leetcode.com/problems/find-all-anagrams-in-a-string/
+542,01 Matrix,Medium,53.1%,Graph,https://leetcode.com/problems/01-matrix/
+543,Diameter of Binary Tree,Easy,64.9%,Binary Tree,https://leetcode.com/problems/diameter-of-binary-tree/
+621,Task Scheduler,Medium,62.5%,Heap,https://leetcode.com/problems/task-scheduler/
+704,Binary Search,Easy,60.4%,Binary Search,https://leetcode.com/problems/binary-search/
+721,Accounts Merge,Medium,60.8%,Graph,https://leetcode.com/problems/accounts-merge/
+733,Flood Fill,Easy,67.7%,Graph,https://leetcode.com/problems/flood-fill/
+876,Middle of the Linked List,Easy,81.4%,Linked List,https://leetcode.com/problems/middle-of-the-linked-list/
+973,K Closest Points to Origin,Medium,68.6%,Heap,https://leetcode.com/problems/k-closest-points-to-origin/
+981,Time Based Key-Value Store,Medium,49.7%,Binary Search,https://leetcode.com/problems/time-based-key-value-store/
+994,Rotting Oranges,Medium,57.9%,Graph,https://leetcode.com/problems/rotting-oranges/
+1235,Maximum Profit in Job Scheduling,Hard,54.6%,Binary Search,https://leetcode.com/problems/maximum-profit-in-job-scheduling/

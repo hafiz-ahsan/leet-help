@@ -8,7 +8,7 @@ A CLI tool suite to create a LeetCode study workbook from a CSV file containing 
 - **Generate solutions** using multiple LLMs via Simon Willison's `llm` CLI tool
 - **Create markdown index** with links to all problems and solutions
 - **Generate PDFs** for each problem with solutions, plus a combined workbook
-- **Build Anki decks** for spaced repetition study (coming soon)
+- **Build Anki decks** for spaced repetition study
 
 ## Installation
 
@@ -126,11 +126,26 @@ Output:
 - `problems/{number}-{slug}/solutions.pdf` (individual PDFs)
 - `{problemset}-solutions.pdf` (combined workbook, e.g., `grind75-solutions.pdf`)
 
-### 5. Generate Anki Deck (Coming Soon)
+### 5. Generate Anki Deck
+
+Create Anki flash cards with problem statements and pseudocode solutions.
 
 ```bash
-uv run leet-help anki --csv grind75.csv --output grind75.apkg
+# Generate Anki deck for all problems
+DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help anki --csv grind75.csv
+
+# Generate for specific problems
+DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help anki --csv grind75.csv -p 1 -p 3
+
+# Custom output file and deck name
+DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help anki --csv grind75.csv -o my-deck.apkg --deck-name "My LeetCode Deck"
 ```
+
+Output: `{problemset}.apkg` (e.g., `grind75.apkg`)
+
+**Card format:**
+- **Front:** Problem statement (without examples/constraints)
+- **Back:** Pseudocode from Claude Opus + links to solutions on GitHub
 
 ## Configuration
 
@@ -196,6 +211,7 @@ leet-help/
 - **markdown** - Markdown to HTML conversion
 - **pygments** - Syntax highlighting
 - **pypdf** - PDF concatenation
+- **genanki** - Anki deck generation
 
 ## License
 

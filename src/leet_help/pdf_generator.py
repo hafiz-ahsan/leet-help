@@ -143,7 +143,7 @@ def generate_problem_pdf(
 
     # Find solution files
     claude_solution_file = problem_dir / "solution-claude-opus.md"
-    gpt_solution_file = problem_dir / "solution-gpt5.md"
+    codex_solution_file = problem_dir / "solution-codex.md"
 
     # Check if we should skip
     if not force and pdf_file.exists():
@@ -152,8 +152,8 @@ def generate_problem_pdf(
         source_files = [problem_file]
         if claude_solution_file.exists():
             source_files.append(claude_solution_file)
-        if gpt_solution_file.exists():
-            source_files.append(gpt_solution_file)
+        if codex_solution_file.exists():
+            source_files.append(codex_solution_file)
 
         if all(f.stat().st_mtime < pdf_mtime for f in source_files):
             print(f"  Skipping {problem.number}. {problem.title} (PDF is current)")
@@ -181,13 +181,13 @@ def generate_problem_pdf(
     else:
         claude_html = "<p><em>Solution not available</em></p>"
 
-    # Read and convert GPT-5 solution
-    if gpt_solution_file.exists():
-        gpt_md = gpt_solution_file.read_text(encoding="utf-8")
-        gpt_body = extract_solution_body(gpt_md)
-        gpt_html = markdown_to_html(gpt_body)
+    # Read and convert Codex solution
+    if codex_solution_file.exists():
+        codex_md = codex_solution_file.read_text(encoding="utf-8")
+        codex_body = extract_solution_body(codex_md)
+        codex_html = markdown_to_html(codex_body)
     else:
-        gpt_html = "<p><em>Solution not available</em></p>"
+        codex_html = "<p><em>Solution not available</em></p>"
 
     # Render the template
     html_content = template.render(
@@ -198,7 +198,7 @@ def generate_problem_pdf(
         url=problem.url,
         problem_content=problem_html,
         claude_solution=claude_html,
-        gpt_solution=gpt_html,
+        codex_solution=codex_html,
     )
 
     # Generate PDF
