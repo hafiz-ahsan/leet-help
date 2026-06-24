@@ -19,24 +19,26 @@ Parse the user's request:
 ## Step 2 — Run the download command
 
 ```bash
-uv run leet-help download --csv problem-index.csv [options]
+uv run leet-help download [options]
 ```
+
+`problem-index.csv` is the default — no `--csv` needed unless using a different file.
 
 ### Common invocations
 
 Download specific problems:
 ```bash
-uv run leet-help download --csv problem-index.csv -p 1 -p 3
+uv run leet-help download -p 1 -p 3
 ```
 
 Download all 75 problems (skip ones already present):
 ```bash
-uv run leet-help download --csv problem-index.csv --skip-existing
+uv run leet-help download --skip-existing
 ```
 
 Force re-download everything:
 ```bash
-uv run leet-help download --csv problem-index.csv
+uv run leet-help download
 ```
 
 ### All options

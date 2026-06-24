@@ -22,6 +22,8 @@ def main():
     "--csv",
     "csv_path",
     type=click.Path(exists=True, path_type=Path),
+    default="problem-index.csv",
+    show_default=True,
     help="Path to CSV file containing problems",
 )
 @click.option(
@@ -51,14 +53,7 @@ def main():
 )
 def download(csv_path, problems, output, skip_existing, delay):
     """Download LeetCode problems using a browser."""
-    if not csv_path and not problems:
-        raise click.UsageError("Either --csv or --problems must be specified")
-
-    # Load problems from CSV if provided
-    if csv_path:
-        all_problems = load_problems_from_csv(csv_path)
-    else:
-        raise click.UsageError("--csv is required to get problem metadata")
+    all_problems = load_problems_from_csv(csv_path)
 
     # Filter by problem numbers if specified
     if problems:
