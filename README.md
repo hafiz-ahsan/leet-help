@@ -2,6 +2,8 @@
 
 A LeetCode study workbook builder. Download problems, generate AI-authored solutions, browse them in a split-pane web UI, and export PDF workbooks.
 
+![leet-help web UI](docs/screenshot.png)
+
 **The primary way to use this project is through its skills.** Inside Claude Code (or Codex) in this repo, you drive everything with three slash commands — no need to memorize CLI flags.
 
 ## Skills
