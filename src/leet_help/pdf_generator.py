@@ -234,17 +234,15 @@ def concatenate_pdfs(pdf_paths: list[Path], output_path: Path) -> Path:
 def generate_all_pdfs(
     problems: list[Problem],
     problems_dir: Path,
-    problemset_name: str,
     templates_dir: Path | None = None,
     force: bool = False,
 ) -> list[Path]:
     """
-    Generate PDFs for all problems and concatenate into a combined file.
+    Generate PDFs for all problems and concatenate into all-solutions.pdf.
 
     Args:
         problems: List of problems from CSV
         problems_dir: Directory containing problem folders
-        problemset_name: Name for the combined PDF (e.g., "grind75")
         templates_dir: Directory containing HTML templates
         force: Force regeneration even if PDFs are current
 
@@ -277,7 +275,7 @@ def generate_all_pdfs(
 
     # Concatenate all PDFs into a single file
     if all_pdfs:
-        combined_pdf = Path(f"{problemset_name}-solutions.pdf")
+        combined_pdf = Path("all-solutions.pdf")
         print(f"Concatenating {len(all_pdfs)} PDFs into {combined_pdf}...")
         concatenate_pdfs(all_pdfs, combined_pdf)
         print(f"Created {combined_pdf}")

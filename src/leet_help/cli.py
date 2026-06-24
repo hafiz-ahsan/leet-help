@@ -152,11 +152,7 @@ def pdf(csv_path, problems, problems_dir, force):
             click.echo(f"No problems found matching numbers: {problems}")
             return
 
-    # Get problemset name from CSV filename (e.g., "grind75" from "grind75.csv")
-    problemset_name = csv_path.stem
-
-    # Generate PDFs
-    generate_all_pdfs(all_problems, problems_dir, problemset_name, force=force)
+    generate_all_pdfs(all_problems, problems_dir, force=force)
 
 
 @main.command()
