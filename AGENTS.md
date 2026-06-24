@@ -4,7 +4,7 @@
 
 Each skill has a `SKILL.md` with full instructions. Read the relevant file before acting.
 
-### Solve LeetCode Problems
+### `/solve-leetcode-problem` — Solve LeetCode Problems
 
 When the user asks you to solve, regenerate, re-solve, update, or refresh solutions, follow:
 
@@ -21,7 +21,7 @@ As Codex, write solutions to `solution-codex.md` inside each problem's directory
 | "solve 1, 3, and 21" | Generate solutions for those three problem numbers |
 | "regenerate all Easy problems" | Filter by Difficulty=Easy |
 
-### Download LeetCode Problems
+### `/download-leetcode-problem` — Download LeetCode Problems
 
 When the user asks you to download, fetch, or pull problem statements, follow:
 
@@ -37,7 +37,7 @@ Fetches metadata from the LeetCode API, infers category, updates `problem-index.
 | "download problems 1 and 3" | Fetch metadata for each → update CSV → `uv run leet-help download -p 1 -p 3` |
 | "re-download problem 1" | `uv run leet-help download -p 1 --force` |
 
-### Generate PDFs
+### `/generate-leethelp-pdf` — Generate PDFs
 
 When the user asks to generate, regenerate, rebuild, or export PDFs, follow:
 
