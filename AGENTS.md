@@ -29,14 +29,12 @@ When the user asks you to download, fetch, or pull problem statements, follow:
 .claude/skills/download-leetcode-problem/SKILL.md
 ```
 
-Uses `uv run leet-help download`. `problem-index.csv` is the default — no `--csv` needed.
-
-At least one `-p` is required — the command errors without it.
+Fetches metadata from the LeetCode API, infers category, updates `problem-index.csv`, then calls the CLI. At least one `-p` is required.
 
 | User says | Action |
 |---|---|
-| "download problem 1" | `uv run leet-help download -p 1` |
-| "download problems 1, 3, and 21" | `uv run leet-help download -p 1 -p 3 -p 21` |
+| "download problem 37" | Fetch metadata → update CSV → `uv run leet-help download -p 37` |
+| "download problems 1 and 3" | Fetch metadata for each → update CSV → `uv run leet-help download -p 1 -p 3` |
 | "re-download problem 1" | `uv run leet-help download -p 1 --force` |
 
 ### Generate PDFs
@@ -51,9 +49,9 @@ Requires `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib` on macOS. Produces per-p
 
 | User says | Action |
 |---|---|
-| "generate PDF for problem 37" | `... leet-help pdf -p 37` |
-| "regenerate all PDFs" | `... leet-help pdf --force` |
-| "generate PDFs for all problems" | `... leet-help pdf` |
+| "generate PDF for problem 37" | `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help pdf -p 37` |
+| "regenerate all PDFs" | `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help pdf --force` |
+| "generate PDFs for all problems" | `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help pdf` |
 
 ## Project overview
 
@@ -61,21 +59,25 @@ Requires `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib` on macOS. Produces per-p
 
 | Command | Purpose |
 |---|---|
-| `download --csv problem-index.csv` | Download problem statements from LeetCode |
+| `download -p {N}` | Download problem statement from LeetCode |
+| `pdf` | Generate per-problem PDFs + `all-solutions.pdf` |
 | `serve` | Launch web UI at `http://127.0.0.1:8000` |
-| `pdf --csv problem-index.csv` | Generate per-problem PDFs + combined workbook |
-| `index --csv problem-index.csv` | Generate a markdown index |
+| `index` | Generate a markdown index |
 
-On macOS, prefix PDF/serve commands with `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib`.
+`problem-index.csv` is the default for all commands — no `--csv` needed. On macOS, prefix `pdf` and `serve` with `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib`.
 
 ## Key files
 
 ```
-problem-index.csv                    # 75 Grind 75 problems
-grind75-solutions.pdf                # Combined PDF workbook
-problems/{N}-{slug}/problem.md       # Problem statement
-problems/{N}-{slug}/solution-*.md    # AI-generated solutions
-.claude/skills/solve-leetcode-problem/SKILL.md  # Solve skill (read this)
-src/leet_help/server.py              # FastAPI web server
-templates/browser.html               # Web UI
+problem-index.csv                                        # Problem list (grows as new problems are added)
+all-solutions.pdf                                        # Combined PDF workbook
+problems/{N}-{slug}/problem.md                          # Problem statement
+problems/{N}-{slug}/solution-claude-opus.md             # Claude solution
+problems/{N}-{slug}/solution-codex.md                   # Codex solution
+problems/{N}-{slug}/solutions.pdf                       # Per-problem PDF
+.claude/skills/solve-leetcode-problem/SKILL.md          # Solve skill
+.claude/skills/download-leetcode-problem/SKILL.md       # Download skill
+.claude/skills/generate-pdf/SKILL.md                    # PDF generation skill
+src/leet_help/server.py                                  # FastAPI web server
+templates/browser.html                                   # Web UI
 ```
