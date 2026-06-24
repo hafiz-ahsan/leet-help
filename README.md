@@ -1,14 +1,15 @@
 # leet-help
 
-A CLI tool suite to create a LeetCode study workbook from a CSV file containing problem metadata. Download problems, generate AI-powered solutions, create PDF workbooks, and build Anki flash cards.
+A CLI tool and web app for building a LeetCode study workbook. Download problems, generate AI-powered solutions, browse them in a split-pane web UI, and export PDF workbooks.
 
 ## Features
 
 - **Download** LeetCode problems using Playwright/Chromium
-- **Generate solutions** using multiple LLMs via Simon Willison's `llm` CLI tool
+- **Browse** problems and solutions in a split-pane web UI with syntax highlighting
+- **Generate solutions** using AI (Claude via `claude` CLI, OpenAI via `codex` CLI) — no API keys required
 - **Create markdown index** with links to all problems and solutions
 - **Generate PDFs** for each problem with solutions, plus a combined workbook
-- **Build Anki decks** for spaced repetition study
+- **`/solve-leetcode-problem` skill** for Claude Code — regenerate any problem's solution directly within an AI session
 
 ## Installation
 
@@ -16,10 +17,7 @@ A CLI tool suite to create a LeetCode study workbook from a CSV file containing 
 
 - Python 3.11+
 - [uv](https://github.com/astral-sh/uv) package manager
-- [llm](https://github.com/simonw/llm) CLI tool (for solution generation)
 - Homebrew (macOS) for PDF dependencies
-
-### Setup
 
 ```bash
 # Clone the repo
@@ -36,182 +34,171 @@ uv run playwright install chromium
 brew install pango
 ```
 
-### API Keys
-
-Create a `.env` file in the project root with your API keys:
-
-```bash
-OPENAI_API_KEY=your-openai-key
-ANTHROPIC_API_KEY=your-anthropic-key
-```
-
-Install LLM plugins for the models you want to use:
-
-```bash
-llm install llm-anthropic
-```
-
 ## Usage
 
 ### CSV Format
 
-Create a CSV file with your problem list:
+`problem-index.csv` (included) has all 75 Grind 75 problems:
 
 ```csv
-Number,Title,Acceptance,Difficulty,URL
-1,Two Sum,56.9%,Easy,https://leetcode.com/problems/two-sum/
-3,Longest Substring Without Repeating Characters,38.3%,Medium,https://leetcode.com/problems/longest-substring-without-repeating-characters/
+Number,Title,Difficulty,Acceptance,Category,URL
+1,Two Sum,Easy,56.9%,Array,https://leetcode.com/problems/two-sum/
+3,Longest Substring Without Repeating Characters,Medium,38.3%,String,https://leetcode.com/problems/longest-substring-without-repeating-characters/
 ```
 
 ### 1. Download Problems
 
-Download LeetCode problem descriptions and save as markdown.
-
 ```bash
 # Download all problems from CSV
-uv run leet-help download --csv grind75.csv
+uv run leet-help download --csv problem-index.csv
 
 # Download specific problems
-uv run leet-help download --csv grind75.csv -p 1 -p 3
+uv run leet-help download --csv problem-index.csv -p 1 -p 3
 
 # Skip already downloaded problems
-uv run leet-help download --csv grind75.csv --skip-existing
+uv run leet-help download --csv problem-index.csv --skip-existing
 ```
 
 Output: `problems/{number}-{slug}/problem.md`
 
-### 2. Generate Solutions
-
-Generate AI-powered solutions with pseudocode and heavily-commented code.
+### 2. Browse in the Web UI
 
 ```bash
-# Generate solutions using models from config.yaml
-uv run leet-help solve --csv grind75.csv
-
-# Use specific models
-uv run leet-help solve --csv grind75.csv -m gpt-5 -m claude-opus-4.5
-
-# Generate for specific problems
-uv run leet-help solve --csv grind75.csv -p 1 -p 3 -m gpt-5
+DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help serve
 ```
 
-Output: `problems/{number}-{slug}/solution-{model}.md`
+Opens a browser at `http://127.0.0.1:8000` with:
+
+- **Left column** — filterable problem list (by difficulty and category)
+- **Middle pane** — problem statement (always visible)
+- **Right pane** — solution tabs (Claude, Codex, GPT-5), defaulting to the Claude solution
 
 ### 3. Generate Index
 
-Create a markdown index file with a table linking to all problems and solutions.
-
 ```bash
-uv run leet-help index --csv grind75.csv
+uv run leet-help index --csv problem-index.csv
 ```
 
-Output: `grind75.md` (same basename as CSV)
+Output: `problem-index.md`
 
 ### 4. Generate PDFs
 
-Create PDF files for each problem containing the problem statement and solutions.
-
 ```bash
 # Generate PDFs for all problems
-DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help pdf --csv grind75.csv
+DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help pdf --csv problem-index.csv
 
 # Generate for specific problems
-DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help pdf --csv grind75.csv -p 1 -p 3
+DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help pdf --csv problem-index.csv -p 1 -p 3
 
 # Force regeneration (ignore timestamps)
-DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help pdf --csv grind75.csv --force
+DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help pdf --csv problem-index.csv --force
 ```
 
 Output:
-- `problems/{number}-{slug}/solutions.pdf` (individual PDFs)
-- `{problemset}-solutions.pdf` (combined workbook, e.g., `grind75-solutions.pdf`)
+- `problems/{number}-{slug}/solutions.pdf` — per-problem PDF
+- `problem-index-solutions.pdf` — combined workbook for all 75 problems
 
-### 5. Generate Anki Deck
+## Solving Problems with AI
 
-Create Anki flash cards with problem statements and pseudocode solutions.
+Solutions are generated by AI — no API keys needed. There are two ways to regenerate them:
 
-```bash
-# Generate Anki deck for all problems
-DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help anki --csv grind75.csv
+### Option A: `/solve-leetcode-problem` Claude Code skill
 
-# Generate for specific problems
-DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help anki --csv grind75.csv -p 1 -p 3
+Inside any Claude Code session in this repo, run:
 
-# Custom output file and deck name
-DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib uv run leet-help anki --csv grind75.csv -o my-deck.apkg --deck-name "My LeetCode Deck"
+```
+/solve-leetcode-problem 1
+/solve-leetcode-problem 1 3 21
+/solve-leetcode-problem          # regenerates all 75
 ```
 
-Output: `{problemset}.apkg` (e.g., `grind75.apkg`)
+The skill reads the problem, generates a solution (intuition → pseudocode → commented Python → complexity analysis), verifies it with `uv run python`, and writes the output file. No external CLI calls — Claude itself is the solver.
 
-**Card format:**
-- **Front:** Problem statement (without examples/constraints)
-- **Back:** Pseudocode from Claude Opus + links to solutions on GitHub
+### Option B: Claude CLI or Codex CLI directly
+
+Use `claude -p` or `codex -q` with the problem markdown as input and write the result to `problems/{number}-{slug}/solution-claude-opus.md` (or `solution-codex.md`).
+
+### Solution file format
+
+Every solution file begins with a standard header:
+
+```markdown
+# Solution for {Number}. {Title}
+
+**Generated by:** {model name}
+**Date:** {YYYY-MM-DD HH:MM:SS}
+**Source:** <{URL}>
+
+---
+```
 
 ## Configuration
 
 ### config.yaml
 
-Configure LLM models and reference directories:
+```yaml
+reference_directories:
+  - /path/to/existing/solutions   # optional: used by the skill to find reference implementations
+```
+
+Model definitions (used by the skill to label output files):
 
 ```yaml
 llm:
-  default_model: "gpt-4o"
+  default_model: "claude-opus"
   models:
+    - name: "claude-opus-4.8"
+      alias: "claude-opus"
+      backend: "claude"
     - name: "gpt-5"
       alias: "gpt5"
-    - name: "claude-opus-4.5"
-      alias: "claude-opus"
-
-reference_directories:
-  - /path/to/existing/solutions
-
-prompt: |
-  You are an expert algorithm tutor...
+      backend: "codex"
 ```
 
 ## Project Structure
 
 ```
 leet-help/
-├── pyproject.toml           # Package configuration
-├── config.yaml              # LLM configuration
-├── grind75.csv              # Input problem list
-├── grind75.md               # Generated index
-├── grind75-solutions.pdf    # Combined PDF workbook
+├── pyproject.toml                   # Package configuration
+├── config.yaml                      # Model configuration
+├── problem-index.csv                # 75 Grind 75 problems with categories
+├── problem-index-solutions.pdf      # Combined PDF workbook (all 75 problems)
 ├── src/leet_help/
-│   ├── cli.py               # CLI entry point
-│   ├── downloader.py        # Problem downloader
-│   ├── solver.py            # Solution generator
-│   ├── indexer.py           # Markdown index generator
-│   ├── pdf_generator.py     # PDF generator
-│   ├── models.py            # Data models
-│   └── utils.py             # Shared utilities
-├── problems/                # Downloaded problems & solutions
-│   ├── 1-two-sum/
-│   │   ├── problem.md
-│   │   ├── solution-gpt5.md
-│   │   ├── solution-claude-opus.md
-│   │   └── solutions.pdf
-│   └── ...
+│   ├── cli.py                       # CLI entry point (download, index, pdf, serve)
+│   ├── downloader.py                # Problem downloader (Playwright)
+│   ├── server.py                    # FastAPI web server
+│   ├── indexer.py                   # Markdown index generator
+│   ├── pdf_generator.py             # PDF generator (WeasyPrint)
+│   ├── models.py                    # Data models
+│   └── utils.py                     # Shared utilities
 ├── templates/
-│   └── problem.html         # PDF template
-└── plans/
-    └── implementation-plan.md
+│   ├── browser.html                 # Web UI (marked.js + highlight.js)
+│   └── problem.html                 # PDF template
+├── .claude/skills/
+│   └── solve-leetcode-problem/
+│       └── SKILL.md                 # Claude Code skill for solution generation
+└── problems/                        # Downloaded problems & solutions
+    ├── 1-two-sum/
+    │   ├── problem.md
+    │   ├── solution-claude-opus.md
+    │   ├── solution-codex.md
+    │   ├── solution-gpt-5.md
+    │   └── solutions.pdf
+    └── ...
 ```
 
 ## Dependencies
 
-- **click** - CLI framework
-- **playwright** - Browser automation for downloading
-- **html2text** - HTML to Markdown conversion
-- **pyyaml** - Configuration file parsing
-- **python-dotenv** - Environment variable loading
-- **weasyprint** - HTML to PDF conversion
-- **jinja2** - HTML templating
-- **markdown** - Markdown to HTML conversion
-- **pygments** - Syntax highlighting
-- **pypdf** - PDF concatenation
-- **genanki** - Anki deck generation
+- **click** — CLI framework
+- **playwright** — browser automation for downloading problems
+- **html2text** — HTML to Markdown conversion
+- **pyyaml** — configuration file parsing
+- **weasyprint** — HTML to PDF conversion
+- **jinja2** — HTML templating
+- **markdown** — Markdown to HTML conversion
+- **pygments** — syntax highlighting (PDF)
+- **pypdf** — PDF concatenation
+- **fastapi** + **uvicorn** — web server for the browser UI
 
 ## License
 
